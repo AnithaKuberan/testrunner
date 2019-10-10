@@ -319,7 +319,7 @@ class MemcachedClient(object):
     def _doMetaCmd(self, cmd, key, value, cas, exp, flags, seqno, remote_cas, options, collection):
         #extra = struct.pack('>IIQQI', flags, exp, seqno, remote_cas, 0)
         exp = 0
-        extra = struct.pack('>IIQQIH', flags, exp, seqno, remote_cas, options)
+        extra = struct.pack('>IIQQI', flags, exp, seqno, remote_cas, options)
 
         collection = self.collection_name(collection)
         return self._doCmd(cmd, key, value, extra, cas, collection)
