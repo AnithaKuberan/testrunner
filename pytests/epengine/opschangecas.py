@@ -335,7 +335,7 @@ class OpsChangeCasTests(BucketConfig):
             self.assertTrue(max_cas == cas, '[ERROR]Max cas  is not equal to cas {0}'.format(cas))
 
             # and then mix in a set with meta
-            set_with_meta_resp = mc_active.setWithMeta(key, '123456789', 0, 0, 225, max_cas+1)
+            set_with_meta_resp = mc_active.setWithMeta(key, '123456789', 0, 0, 225, max_cas+1, 0)
             cas_post_meta = mc_active.getMeta(key)[4]
 
 
