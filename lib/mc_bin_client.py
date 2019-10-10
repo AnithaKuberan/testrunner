@@ -316,19 +316,19 @@ class MemcachedClient(object):
 
 
     # doMeta - copied from the mc bin client on github
-    def _doMetaCmd(self, cmd, key, value, cas, exp, flags, seqno, remote_cas, options, meta_len, collection):
+    def _doMetaCmd(self, cmd, key, value, cas, exp, flags, seqno, remote_cas, options, collection):
         #extra = struct.pack('>IIQQI', flags, exp, seqno, remote_cas, 0)
         exp = 0
-        extra = struct.pack('>IIQQIH', flags, exp, seqno, remote_cas, options, meta_len)
+        extra = struct.pack('>IIQQIH', flags, exp, seqno, remote_cas, options)
 
         collection = self.collection_name(collection)
         return self._doCmd(cmd, key, value, extra, cas, collection)
 
-    def setWithMeta(self, key, value, exp, flags, seqno, remote_cas, meta_len, options=2, collection=None):
+    def setWithMeta(self, key, value, exp, flags, seqno, remote_cas, options=2, collection=None):
         """Set a value and its meta data in the memcached server."""
         collection = self.collection_name(collection)
         return self._doMetaCmd(memcacheConstants.CMD_SET_WITH_META,
-                               key, value, 0, exp, flags, seqno, remote_cas, options, meta_len, collection)
+                               key, value, 0, exp, flags, seqno, remote_cas, options, collection)
 
     def setWithMetaInvalid(self, key, value, exp, flags, seqno, remote_cas, options=2, collection=None):
         """Set a value with meta that can be an invalid number memcached server."""
@@ -355,7 +355,7 @@ class MemcachedClient(object):
         self._set_vbucket(key, -1)
 
         return self._doCmd(memcacheConstants.CMD_SET_WITH_META, key, value,
-                struct.pack(memcacheConstants.META_EXTRA_FMT, flags, exp,  SEQNO, cas, META_LEN),collection=collection)
+                struct.pack(memcacheConstants.META_EXTRA_FMT, flags, exp,  SEQNO, cas),collection=collection)
 
 
     # set with meta using the LWW conflict resolution CAS
@@ -375,7 +375,7 @@ class MemcachedClient(object):
 
         return self._doCmd(memcacheConstants.CMD_DEL_WITH_META, key, '',
                 struct.pack('>IIQQI', flags, exp,  SEQNO, cas, memcacheConstants.FORCE_ACCEPT_WITH_META_OPS),collection=collection)
-                #struct.pack(memcacheConstants.META_EXTRA_FMT, flags, exp,  SEQNO, cas, META_LEN))
+                #struct.pack(memcacheConstants.META_EXTRA_FMT, flags, exp,  SEQNO, cas))
 
 
 
