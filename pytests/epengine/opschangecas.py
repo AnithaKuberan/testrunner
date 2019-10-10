@@ -4,7 +4,7 @@ from memcacheConstants import ERR_NOT_FOUND
 from castest.cas_base import CasBaseTest
 from epengine.bucket_config import BucketConfig
 from couchbase_helper.documentgenerator import BlobGenerator
-import mc_bin_client
+import ep_mc_bin_client
 from mc_bin_client import MemcachedError
 
 from membase.api.rest_client import RestConnection, RestHelper
