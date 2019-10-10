@@ -312,7 +312,7 @@ class OpsChangeCasTests(BucketConfig):
 
 
             # do a set meta based on the existing CAS
-            set_with_meta_resp = mc_active.setWithMeta(key, '123456789', 0, 0, 123, cas, 10)
+            set_with_meta_resp = mc_active.setWithMeta(key, '123456789', 0, 0, 123, cas, 0)
 
 
             # check what get meta say
